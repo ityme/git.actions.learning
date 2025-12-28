@@ -2,6 +2,8 @@ name: CI
 
 on:
   push:
+    branches:
+      - main
     tags:
       - 'v*'
 
@@ -15,7 +17,12 @@ jobs:
 
       - name: args setup
         run: |
-          echo ${{ github.ref }}
-          echo ${{ github.ref_name }}
-          echo $GITHUB_REF
-          echo ${GITHUB_REF/refs\/tags\//}
+          echo "PROJECT_NAME=$(basename ${{ github.repository }})" >> $GITHUB_ENV
+          echo "TAG_NAME=$(basename ${{ github.ref }})" >> $GITHUB_ENV
+          echo "BRANCH_NAME=${{ github.head_ref || github.ref_name }}" >> $GITHUB_ENV
+
+      - name: Display environment variables
+        run: |
+          echo "Project Name: $PROJECT_NAME"
+          echo "Tag Name: $TAG_NAME"
+          echo "Branch Name: $BRANCH_NAME"
