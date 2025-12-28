@@ -18,7 +18,7 @@ jobs:
       - name: args setup
         run: |
           echo "PROJECT_NAME=$(basename ${{ github.repository }})" >> $GITHUB_ENV
-          echo "TAG_NAME=$(basename ${{ github.ref }})" >> $GITHUB_ENV
+          echo "TAG_NAME=$(git tag --sort=-v:refname | head -n 1)" >> $GITHUB_ENV
           echo "BRANCH_NAME=$(git branch --show-current)" >> $GITHUB_ENV
 
       - name: Display environment variables
