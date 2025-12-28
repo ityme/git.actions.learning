@@ -29,5 +29,5 @@ jobs:
 
           echo "Full GitHub Ref: $GITHUB_REF"
           echo "Environment Variables: $GITHUB_ENV"
-          echo "Environment Variables: $ENV"
+          echo "Environment Variables: $GITHUB_REF_NAME"
           
