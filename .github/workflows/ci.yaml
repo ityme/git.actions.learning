@@ -26,3 +26,6 @@ jobs:
           echo "Project Name: $PROJECT_NAME"
           echo "Tag Name: $TAG_NAME"
           echo "Branch Name: $BRANCH_NAME"
+
+          echo "Full GitHub Ref: $GITHUB_REF"
+          
