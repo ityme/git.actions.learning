@@ -28,4 +28,6 @@ jobs:
           echo "Branch Name: $BRANCH_NAME"
 
           echo "Full GitHub Ref: $GITHUB_REF"
+          echo "Environment Variables: $GITHUB_ENV"
+          echo "Environment Variables: $ENV"
           
