@@ -36,8 +36,13 @@ jobs:
         run: |
           zip -r $RELEASE_NAME.zip temp/*
 
+      - name: check release asset
+        run: |
+          ls -la $RELEASE_NAME.zip
+          tree .
+
       - name: Upload Release assets
         uses: softprops/action-gh-release@v2
         with:
             files: |
-              $RELEASE_NAME.zip
+              ${{ env.RELEASE_NAME }}.zip
