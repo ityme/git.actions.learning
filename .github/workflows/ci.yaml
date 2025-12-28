@@ -2,8 +2,6 @@ name: CI
 
 on:
   push:
-    branches:
-      - main
     tags:
       - 'v*'
 
@@ -18,12 +16,28 @@ jobs:
       - name: args setup
         run: |
           echo "PROJECT_NAME=$(basename ${{ github.repository }})" >> $GITHUB_ENV
-          echo "TAG_NAME=$(git tag --sort=-v:refname | head -n 1)" >> $GITHUB_ENV
-          echo "BRANCH_NAME=$(git branch --show-current)" >> $GITHUB_ENV
+          echo "TAG_NAME=$(basename ${{ github.ref }})" >> $GITHUB_ENV
+          echo "RELEASE_NAME=$PROJECT_NAME-$TAG_NAME" >> $GITHUB_ENV
 
       - name: Display environment variables
         run: |
           echo "Project Name: $PROJECT_NAME"
           echo "Tag Name: $TAG_NAME"
-          echo "Branch Name: $BRANCH_NAME"
-          
+          echo "Release Name: $RELEASE_NAME"
+
+      - name: create temporary workspace
+        run: |
+          mkdir -p temp
+          mv dir temp/
+          mv a temp/
+          mv b temp/
+
+      - name: Create release archive
+        run: |
+          zip -r $RELEASE_NAME.zip temp/*
+
+      - name: Upload Release Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: $RELEASE_NAME
+          path: $RELEASE_NAME.zip
