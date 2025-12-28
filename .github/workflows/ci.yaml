@@ -37,7 +37,7 @@ jobs:
           zip -r $RELEASE_NAME.zip temp/*
 
       - name: Upload Release Artifact
-        uses: actions/upload-artifact@v3
+        uses: softprops/action-gh-release@v2
         with:
-          name: $RELEASE_NAME
-          path: $RELEASE_NAME.zip
+            files: |
+              $RELEASE_NAME.zip
