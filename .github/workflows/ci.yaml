@@ -3,15 +3,22 @@ name: CI
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: check files
+        run: |
+          ls -la
+          tree .
 
       - name: args setup
         run: |
@@ -34,15 +41,20 @@ jobs:
 
       - name: Create release archive
         run: |
-          zip -r $RELEASE_NAME.zip temp/*
+          cd temp/
+          zip -r $RELEASE_NAME.zip * 
+          mkdir _temp_release_assets
+          mv $RELEASE_NAME.zip ./_temp_release_assets/
+          cd ..
 
-      - name: check release asset
+      - name: check files
         run: |
-          ls -la $RELEASE_NAME.zip
+          ls -la
           tree .
 
       - name: Upload Release assets
         uses: softprops/action-gh-release@v2
         with:
-            files: |
-              ${{ env.RELEASE_NAME }}.zip
+          files: |
+            ./temp/_temp_release_assets/${{ env.RELEASE_NAME }}.zip
+
