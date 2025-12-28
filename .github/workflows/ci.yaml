@@ -16,5 +16,6 @@ jobs:
       - name: args setup
         run: |
           echo ${{ github.ref }}
+          echo ${{ github.ref_name }}
           echo $GITHUB_REF
           echo ${GITHUB_REF/refs\/tags\//}
